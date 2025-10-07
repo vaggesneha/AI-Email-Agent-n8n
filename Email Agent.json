@@ -1,0 +1,725 @@
+{
+  "name": "Email Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "custom",
+              "cronExpression": "*/5 * * * *"
+            },
+            {
+              "hour": null,
+              "minute": 5
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -1200,
+        -464
+      ],
+      "id": "745b4be2-36ac-42c6-a560-b439323d57aa",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "icVyCGTxyExNDuAo",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputText": "=Subject: {{ $json.Subject }}\nEmail body: {{ $json.snippet }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "Promotions",
+              "description": "This is an email that is looking to sell me things like Marketing campaigns, discounts, offers, and advertisements from brands or services."
+            },
+            {
+              "category": "Social ",
+              "description": "Any email from social media site like YouTube or Instagram or LinkedIn  and from social networks, community updates, event invites, or friend requests."
+            },
+            {
+              "category": "Personal",
+              "description": "An email sent from aor Direct one-to-one communication from family, friends, or personal contacts. friend, or family member "
+            },
+            {
+              "category": "Sales",
+              "description": "Anything regarding clients sending over documents, sales or Business-related deals, product pitches, and outreach emails aimed at generating revenue."
+            },
+            {
+              "category": "Recruitment ",
+              "description": "Anyone looking for a job or join our team or Job opportunities, hiring notices, candidate applications, or recruiter outreach."
+            },
+            {
+              "category": "Receipts ",
+              "description": "Transaction confirmations from online purchases, subscriptions, or services. They usually include payment details, order summaries, and invoice numbers."
+            },
+            {
+              "category": "Misc",
+              "description": "Anything that doesnot falls with another categories"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        -960,
+        -496
+      ],
+      "id": "e08de4a1-0fa6-4a40-8155-4b2aea691c23",
+      "name": "Text Classifier"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -592,
+        528
+      ],
+      "id": "cc2fbbab-6d02-4a98-93ad-607e3d42cf8f",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "jnzUqZCntazf9dsK",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -592,
+        944
+      ],
+      "id": "31ca10b1-a908-4249-af64-f94e77ce6ce3",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "jnzUqZCntazf9dsK",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -592,
+        736
+      ],
+      "id": "3ceabd22-f45e-452a-bbcd-3283a40c2c6b",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "tIWxSnyISmJ2cGjL",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -960,
+        -144
+      ],
+      "id": "3c9d2c6e-f011-4f48-a870-a459d84a6ef5",
+      "name": "OpenAI Chat Model3",
+      "credentials": {
+        "openAiApi": {
+          "id": "tIWxSnyISmJ2cGjL",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "messageId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -336,
+        -768
+      ],
+      "id": "037163c2-8c59-42fe-a16d-ab5fd72d7e6c",
+      "name": "Delete a message",
+      "webhookId": "e92bc205-8902-4ba7-be45-fe9485a155f4",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "icVyCGTxyExNDuAo",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are a good AI agent summarizing and you summarize each and everything in the detail and you will be telling us",
+              "role": "system"
+            },
+            {
+              "content": "=Subject:{{ $('Gmail Trigger').item.json.Subject }}\nEmail body: {{ $('Gmail Trigger').item.json.snippet }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -176,
+        -656
+      ],
+      "id": "f8fc4d42-0e5f-4cbd-a828-3c055a03d1cd",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "tBpI51BdOjgGYdGw",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "19Vlwc-Jdk4sczhC_JIV34YxlH9vRBzt0mGwP4VzuXeA",
+          "mode": "list",
+          "cachedResultName": "n8n flow",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19Vlwc-Jdk4sczhC_JIV34YxlH9vRBzt0mGwP4VzuXeA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19Vlwc-Jdk4sczhC_JIV34YxlH9vRBzt0mGwP4VzuXeA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Dates": "={{ $now }}",
+            "ID": "={{ $('Social').item.json.id }}",
+            "Subject Line": "={{ $('Gmail Trigger').item.json.Subject }}",
+            "Summary ": "={{ $json.message.content }}",
+            "Snippet": "={{ $('Gmail Trigger').item.json.snippet }}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Dates",
+              "displayName": "Dates",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Subject Line",
+              "displayName": "Subject Line",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Summary ",
+              "displayName": "Summary ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Snippet",
+              "displayName": "Snippet",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        224,
+        -656
+      ],
+      "id": "b507e573-9c60-4be8-85f9-09faf6f5d067",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "69vOByjG5bdNRwnN",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "label",
+        "operation": "get",
+        "labelId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -128,
+        -496
+      ],
+      "id": "9e701462-3754-46fe-bbac-2348db0ae3d5",
+      "name": "Get a label info",
+      "webhookId": "4df8e0a2-3b6e-4d14-82ad-b859d01fb447",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "icVyCGTxyExNDuAo",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "messageId": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -208,
+        -352
+      ],
+      "id": "c766948f-8c96-4dcb-895e-0abb3667df80",
+      "name": "Delete a message1",
+      "webhookId": "e92bc205-8902-4ba7-be45-fe9485a155f4",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "icVyCGTxyExNDuAo",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_2315805006954439910"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -272,
+        -528
+      ],
+      "id": "2b60a2b9-3e82-4638-9a54-c92cf7a6113c",
+      "name": "Personal ",
+      "webhookId": "6b76b15b-dab7-4f2f-bc2b-60abace4493a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "icVyCGTxyExNDuAo",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "CATEGORY_PROMOTIONS"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -624,
+        -768
+      ],
+      "id": "2511cc59-a899-4fdb-8cdc-aa3570201579",
+      "name": "Promotions",
+      "webhookId": "6b76b15b-dab7-4f2f-bc2b-60abace4493a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "icVyCGTxyExNDuAo",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "CATEGORY_SOCIAL"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -448,
+        -624
+      ],
+      "id": "5c5e16f5-1092-42e0-a70e-7ace669ed186",
+      "name": "Social",
+      "webhookId": "6b76b15b-dab7-4f2f-bc2b-60abace4493a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "icVyCGTxyExNDuAo",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_1592058087669105108"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -368,
+        -400
+      ],
+      "id": "4ce95b83-c9a0-4035-8968-d5754beb781e",
+      "name": "Sales",
+      "webhookId": "6b76b15b-dab7-4f2f-bc2b-60abace4493a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "icVyCGTxyExNDuAo",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_8800162755551290239"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -176,
+        -192
+      ],
+      "id": "160b7455-90f3-41f2-8092-10b6ef07a418",
+      "name": "Recruitment",
+      "webhookId": "6b76b15b-dab7-4f2f-bc2b-60abace4493a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "icVyCGTxyExNDuAo",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_1114823607895020045"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -432,
+        -144
+      ],
+      "id": "c8a22f92-8ff7-45c2-828a-fb9db5991dbb",
+      "name": "Receipts ",
+      "webhookId": "6b76b15b-dab7-4f2f-bc2b-60abace4493a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "icVyCGTxyExNDuAo",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_1991775615779679231"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -720,
+        -160
+      ],
+      "id": "9c78ec41-6390-4708-a8bc-69d95896131c",
+      "name": "Misc",
+      "webhookId": "6b76b15b-dab7-4f2f-bc2b-60abace4493a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "icVyCGTxyExNDuAo",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Gmail Trigger": [
+      {
+        "json": {
+          "id": "199b3e433eaaffcb",
+          "threadId": "199b3e433eaaffcb",
+          "snippet": "Hardware-from youtube",
+          "payload": {
+            "mimeType": "multipart/alternative"
+          },
+          "sizeEstimate": 91814,
+          "historyId": "18063",
+          "internalDate": "1759659688000",
+          "labels": [
+            {
+              "id": "INBOX",
+              "name": "INBOX"
+            },
+            {
+              "id": "IMPORTANT",
+              "name": "IMPORTANT"
+            },
+            {
+              "id": "CATEGORY_PERSONAL",
+              "name": "CATEGORY_PERSONAL"
+            },
+            {
+              "id": "UNREAD",
+              "name": "UNREAD"
+            }
+          ],
+          "From": "Sneha 10 <vaggesneha@gmail.com>",
+          "Subject": "Fwd: LD Intertech Innovation is hiring a Embedded Systems & Hardware-Software Integration Engineer",
+          "To": "23d45a0412@gmail.com"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Classifier": {
+      "main": [
+        [
+          {
+            "node": "Promotions",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Social",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Personal ",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sales",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Recruitment",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Receipts ",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Misc",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Personal ": {
+      "main": [
+        [
+          {
+            "node": "Get a label info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Promotions": {
+      "main": [
+        [
+          {
+            "node": "Delete a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Social": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sales": {
+      "main": [
+        [
+          {
+            "node": "Delete a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "2d09224f-0213-4e87-a1ab-4abaf1305339",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "76adaa5cf47cf23a8b10389093e2210403cb16fdfce0f2be8758df8116ad2276"
+  },
+  "id": "UTgW2WTMY2NqBySB",
+  "tags": []
+}
